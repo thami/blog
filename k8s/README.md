@@ -4,6 +4,21 @@ Kubernetes manifests for deploying the Astro blog to the K3s cluster.
 
 ## Prerequisites
 
+### GitHub Container Registry Authentication
+
+The blog uses `ghcr.io/thami/blog` as the container image. To pull from ghcr.io:
+
+1. Create a GitHub Personal Access Token (PAT) with `read:packages` scope
+2. Store in Vault:
+   ```bash
+   kubectl exec -n vault vault-0 -- vault kv put secret/github \
+     username=thami \
+     token=<your-github-pat>
+   ```
+3. The ExternalSecret will sync this to a Kubernetes dockerconfigjson secret
+
+**Alternative**: Make the package public at https://github.com/users/thami/packages/container/blog/settings
+
 ### DNS Configuration
 
 Add `blog.thamimagi.dev` DNS record pointing to `192.168.1.108` (Traefik):
