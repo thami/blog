@@ -48,6 +48,8 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: false
             runAsNonRoot: false
+      imagePullSecrets:
+        - name: ghcr-credentials
       securityContext:
         seccompProfile:
           type: RuntimeDefault
