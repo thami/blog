@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: blog-tls
+  namespace: blog
+  labels:
+    app.kubernetes.io/name: blog
+spec:
+  secretName: blog-tls
+  commonName: blog.thamimagi.dev
+  dnsNames:
+    - blog.thamimagi.dev
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
