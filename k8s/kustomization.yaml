@@ -5,7 +5,6 @@ namespace: blog
 
 resources:
   - namespace.yaml
-  - ghcr-external-secret.yaml
   - certificate.yaml
   - deployment.yaml
   - service.yaml
