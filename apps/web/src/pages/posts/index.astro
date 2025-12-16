@@ -1,0 +1,41 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Card } from '@thamimagi/design-system';
+import { getArticles } from '../../lib/directus';
+
+const articles = await getArticles();
+---
+
+<Layout title="Posts | Blog">
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-8">Posts</h1>
+
+    {articles.length === 0 ? (
+      <div class="text-center py-12">
+        <p class="text-lg text-gray-500">No posts yet. Check back soon!</p>
+        <p class="text-sm text-gray-400 mt-2">
+          Make sure Directus is running at {import.meta.env.PUBLIC_DIRECTUS_URL || 'http://192.168.1.108:8055'}
+        </p>
+      </div>
+    ) : (
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {articles.map((article) => (
+          <a href={`/posts/${article.slug}`} class="block hover:scale-105 transition-transform">
+            <Card title={article.title} className="h-full">
+              {article.excerpt && (
+                <p class="text-gray-600 line-clamp-3">{article.excerpt}</p>
+              )}
+              <p class="text-sm text-gray-400 mt-4">
+                {new Date(article.date_created).toLocaleDateString('en-ZA', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </p>
+            </Card>
+          </a>
+        ))}
+      </div>
+    )}
+  </main>
+</Layout>

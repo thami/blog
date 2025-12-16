@@ -10,6 +10,7 @@
     "clean": "rm -rf dist .astro"
   },
   "dependencies": {
+    "@directus/sdk": "^20.3.0",
     "@thamimagi/design-system": "^0.2.0",
     "astro": "^5.9.4"
   },
