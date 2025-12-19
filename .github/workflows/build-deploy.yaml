@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Trivy - Filesystem & Dependency Scan
         uses: aquasecurity/trivy-action@master
