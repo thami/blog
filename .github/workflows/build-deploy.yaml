@@ -46,6 +46,7 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push
+        id: build
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -56,3 +57,21 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/arm64
+          load: true  # Load image locally for Scout scan
+
+      - name: Docker Scout - Vulnerability Scan
+        if: github.event_name != 'pull_request'
+        uses: docker/scout-action@v1
+        with:
+          command: cves
+          image: ${{ env.IMAGE_NAME }}:latest
+          only-severities: critical,high
+          exit-code: true  # Fail build on critical/high CVEs
+          sarif-file: scout-results.sarif
+
+      - name: Upload Scout SARIF
+        if: always() && github.event_name != 'pull_request'
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: scout-results.sarif
+        continue-on-error: true
