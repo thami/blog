@@ -12,7 +12,7 @@
   "dependencies": {
     "@directus/sdk": "^20.3.0",
     "@thamimagi/design-system": "^0.2.0",
-    "astro": "^5.9.4"
+    "astro": "^5.16.6"
   },
   "devDependencies": {
     "@astrojs/react": "^4.3.1",
